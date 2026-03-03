@@ -64,7 +64,8 @@ async function migrate() {
   const db = getDB();
   const records = [];
   await new Promise((resolve, reject) => {
-    fs.createReadStream('./data/raw-transactions.csv')
+    // adjust filename to match actual CSV present in /data
+    fs.createReadStream('./data/AM-prueba-desempeno-data_m4.csv')
       .pipe(csv())
       .on('data', (d) => records.push(d))
       .on('end', resolve)

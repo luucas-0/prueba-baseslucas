@@ -6,13 +6,14 @@ db.createCollection('orders', {
   validator: {
     $jsonSchema: {
       bsonType: 'object',
-      required: ['transaction_id','order_date','customer_id','items','total_amount'],
+      required: ['transaction_id','customer_id','items'],
       properties: {
         transaction_id: { bsonType: 'string' },
-        order_date: { bsonType: 'date' },
+        order_date: { bsonType: ['date', 'string', 'null'] },
         customer_id: { bsonType: 'int' },
-        items: { bsonType: 'array' },
-        total_amount: { bsonType: 'double' }
+        items: { bsonType: 'array', items: { bsonType: 'object' } },
+        total_amount: { bsonType: ['double', 'int', 'null'] },
+        created_at: { bsonType: ['date', 'null'] }
       }
     }
   }

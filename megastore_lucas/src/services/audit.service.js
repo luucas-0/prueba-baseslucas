@@ -4,7 +4,14 @@ class AuditService {
   static async logDeletion(entityType, entityId, deletedData, deletedBy = 'system') {
     const db = getDB();
     const col = db.collection('audit_logs');
-    const doc = { entity_type: entityType, entity_id: entityId, operation: 'DELETE', deleted_data: deletedData, deleted_by: deletedBy, deleted_at: new Date() };
+    const doc = {
+      entity_type: entityType,
+      entity_id: entityId,
+      operation: 'DELETE',
+      deleted_data: deletedData,
+      deleted_by: deletedBy,
+      deleted_at: new Date()
+    };
     return col.insertOne(doc);
   }
 
