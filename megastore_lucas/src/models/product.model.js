@@ -36,12 +36,29 @@ class ProductModel {
   }
 
   static async update(id, data) {
-    const { name, unit_price, category_id, supplier_id } = data;
-    const q = `UPDATE products 
-      SET name = $1, unit_price = $2, category_id = $3, supplier_id = $4 
-      WHERE id = $5 RETURNING *`;
-    
-    const res = await pool.query(q, [name, unit_price, category_id, supplier_id, id]);
+    // construct dynamic update so we don't overwrite with undefined/null values
+    const allowed = ['name', 'unit_price', 'category_id', 'supplier_id'];
+    const sets = [];
+    const vals = [];
+    let idx = 1;
+
+    for (const key of allowed) {
+      if (Object.prototype.hasOwnProperty.call(data, key)) {
+        sets.push(`${key} = $${idx}`);
+        vals.push(data[key]);
+        idx += 1;
+      }
+    }
+
+    if (sets.length === 0) {
+      // nothing to update
+      return null;
+    }
+
+    const q = `UPDATE products SET ${sets.join(', ')} WHERE id = $${idx} RETURNING *`;
+    vals.push(id);
+
+    const res = await pool.query(q, vals);
     return res.rows[0];
   }
 

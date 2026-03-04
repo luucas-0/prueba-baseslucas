@@ -23,6 +23,15 @@ class ProductController {
 
   static async createProduct(req, res, next) {
     try {
+      // basic validation to avoid database NOT NULL violations
+      const { sku, name, unit_price, category_id, supplier_id } = req.body;
+      if (!name || !sku || !category_id || !supplier_id) {
+        return res.status(400).json({
+          success: false,
+          message: 'sku, name, category_id and supplier_id are required'
+        });
+      }
+
       const newP = await ProductModel.create(req.body);
       res.status(201).json({ success: true, data: newP });
     } catch (e) {
@@ -33,6 +42,19 @@ class ProductController {
 
   static async updateProduct(req, res, next) {
     try {
+      // validate fields to prevent nulls
+      const { name, category_id, supplier_id } = req.body;
+      if (name === null) {
+        return res.status(400).json({ success: false, message: 'name cannot be null' });
+      }
+      if (name === undefined && category_id === undefined && supplier_id === undefined &&
+          req.body.unit_price === undefined) {
+        return res.status(400).json({
+          success: false,
+          message: 'At least one field (name, unit_price, category_id, supplier_id) must be provided'
+        });
+      }
+
       const upd = await ProductModel.update(req.params.id, req.body);
       if (!upd) return res.status(404).json({ success: false });
       res.json({ success: true, data: upd });

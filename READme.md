@@ -213,3 +213,36 @@ megastore_lucas/
 **Embedded Documents**: Fast reads in MongoDB  
 **Referential Integrity**: Foreign keys enforced  
 **Schema Validation**: MongoDB document validation 
+
+### crear una base de datos en bash para mongo
+
+```bash
+
+sudo systemctl start mongod
+
+# Habilitar el inicio automático al arrancar el sistema
+sudo systemctl enable mongod
+
+sudo systemctl status mongod
+net start MongoDB
+   mongosh
+
+   use basededatos
+
+   db.Downloads.insertOne({ "ejemplo": "dato inicial" })
+
+   show dbs
+
+   exit
+
+// 1. Seleccionar la base de datos (se creará al insertar el primer dato)
+use mi_base_de_datos_nueva
+
+// 2. Insertar un documento inicial para 'materializar' la DB y la colección
+db.mi_coleccion_ejemplo.insertOne({ "mensaje": "Hola, base de datos creada", "fecha": new Date() })
+
+// 3. Verificar que la base de datos aparece en la lista
+show dbs
+
+// 4. Listar el contenido de la colección para confirmar que se guardó
+db.mi_coleccion_ejemplo.find()

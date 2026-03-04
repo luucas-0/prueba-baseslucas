@@ -49,14 +49,14 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"sku\": \"SKU-NEW-001\",\n  \"product_name\": \"New Product\",\n  \"brand\": \"Brand Name\",\n  \"category\": \"Electronics\",\n  \"price\": 99.99,\n  \"stock\": 50\n}"
+              "raw": "{\n  \"sku\": \"SKU-NEW-001\",\n  \"name\": \"New Product\",\n  \"unit_price\": 99.99,\n  \"category_id\": 1,\n  \"supplier_id\": 1\n}"
             },
             "url": {
               "raw": "{{base_url}}/api/products",
               "host": ["{{base_url}}"],
               "path": ["api", "products"]
             },
-            "description": "Create a new product in the catalog"
+            "description": "Create a new product with fields sku, name, unit_price, category_id, supplier_id"
           },
           "response": []
         },
@@ -72,14 +72,14 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"product_name\": \"Updated Product Name\",\n  \"price\": 149.99,\n  \"stock\": 75\n}"
+              "raw": "{\n  \"name\": \"Updated Product Name\",\n  \"unit_price\": 149.99\n}"
             },
             "url": {
               "raw": "{{base_url}}/api/products/{{product_id}}",
               "host": ["{{base_url}}"],
               "path": ["api", "products", "{{product_id}}"]
             },
-            "description": "Update an existing product"
+            "description": "Update fields (name, unit_price, category_id, supplier_id) of an existing product"
           },
           "response": []
         },
